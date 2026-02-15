@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Saved Data</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="login-box">
+    <h2>Saved Records</h2>
+    <div id="dataList"></div>
+    <br>
+    <button onclick="back()">Back</button>
+</div>
+
+<script>
+    var data = JSON.parse(localStorage.getItem("userdata")) || [];
+
+    function showData() {
+        var html = "";
+        for (var i = 0; i < data.length; i++) {
+            html += "<p>" + (i+1) + ". " + data[i].name + " - " + data[i].phone +
+            " <button onclick='deleteData(" + i + ")'>Delete</button></p>";
+        }
+        document.getElementById("dataList").innerHTML = html;
+    }
+
+    function deleteData(index) {
+        if(confirm("Are you sure to delete?")) {
+            data.splice(index,1);
+            localStorage.setItem("userdata", JSON.stringify(data));
+            showData();
+        }
+    }
+
+    showData();
+</script>
+
+</body>
+</html>
